@@ -1,7 +1,8 @@
 package com.ilegra.prova;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
-import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
+
+import com.ilegra.prova.servicos.ProcessaArquivo;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,42 +13,43 @@ import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 
-import com.ilegra.prova.servicos.ProcessaArquivo;
-
+/**Aplicação de monitoria de lotes de venda desenvolvida para nivelamento técnico para Ilegra.
+* @author Caesar C. Cesar
+* @version 1.0
+*/
 public class Monitorador {
 
-    public static void main(final String[] args) throws IOException, InterruptedException {
+  /**Método de entrada da aplicação o qual configura o monitoramento da pasta de lotes de venda.
+  * Cada ação de NOVO arquivo será iniciada uma nova thread de processamento.
+  * @param args argumentos não utilizados
+  */
+  public static void main(final String[] args) throws IOException, InterruptedException {
 
-        final WatchService monitor = FileSystems.getDefault().newWatchService();
+    //A propriedade do sistema "user.home" contem o caminho da pasta padrão do usuário
+    final String caminhoBase = System.getProperty("user.home")
+        .concat(File.separator).concat("data");
 
-        final String caminhoBase = System.getProperty("user.home")
-            .concat(File.separator).concat("data");
+    final Path caminhoMonitorado = Paths.get(
+        caminhoBase.concat(File.separator).concat("in"));
 
-        final Path caminhoMonitorado = Paths.get(
-            caminhoBase.concat(File.separator).concat("in"));
+    final WatchService monitor = FileSystems.getDefault().newWatchService();
+    caminhoMonitorado.register(monitor, ENTRY_CREATE);
+    
+    WatchKey itemMonitorado;
+    while ((itemMonitorado = monitor.take()) != null) {
+      for (WatchEvent<?> evento : itemMonitorado.pollEvents()) {
 
-        caminhoMonitorado.register(monitor, ENTRY_CREATE, ENTRY_MODIFY);
-        monitorar(caminhoMonitorado, monitor);
-    }
+        WatchEvent.Kind<?> tipoEvento = evento.kind();
+        final Path arquivo = caminhoMonitorado.resolve(
+            evento.context().toString());
 
-    protected static void monitorar(Path caminhoMonitorado, WatchService monitor) throws InterruptedException {
-
-        WatchKey itemMonitorado;
-        while ((itemMonitorado = monitor.take()) != null) {
-            for (WatchEvent<?> evento : itemMonitorado.pollEvents()) {
-
-                WatchEvent.Kind<?> tipoEvento = evento.kind();
-                final Path arquivo = caminhoMonitorado.resolve(
-                    evento.context().toString());
-
-                if (ENTRY_CREATE.equals(tipoEvento) ||
-                    (ENTRY_MODIFY.equals(tipoEvento) && evento.count() == 1)) {
-                    new Thread(new ProcessaArquivo(arquivo)).start();
-                }
-            }
-            if (!itemMonitorado.reset()) {
-                break;
-            }
+        if (ENTRY_CREATE.equals(tipoEvento)) {
+          new Thread(new ProcessaArquivo(caminhoBase, arquivo)).start();
         }
-    }
+      }
+      if (!itemMonitorado.reset()) {
+        break;
+      }
+    }    
+  }
 }
