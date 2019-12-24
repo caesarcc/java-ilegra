@@ -17,7 +17,7 @@ import java.nio.file.WatchService;
 * @author Caesar C. Cesar
 * @version 1.0
 */
-public class Monitorador {
+public final class Monitorador {
 
   /**Método de entrada da aplicação o qual configura o monitoramento da pasta de lotes de venda.
   * Cada ação de NOVO arquivo será iniciada uma nova thread de processamento.
@@ -52,4 +52,9 @@ public class Monitorador {
       }
     }    
   }
+
+  private Monitorador() {
+    // Evitar inicialização incorreta
+    throw new AssertionError("Classe não deve ser instanciada...");
+  } 
 }

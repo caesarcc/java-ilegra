@@ -17,7 +17,7 @@ import java.util.List;
 public class ProcessaArquivo implements Runnable {
 
   private String caminhoBase;
-  private Path arquivo;
+  private final Path arquivo;
 
   public ProcessaArquivo(String caminhoBase, Path arquivo) {
     this.caminhoBase = caminhoBase;

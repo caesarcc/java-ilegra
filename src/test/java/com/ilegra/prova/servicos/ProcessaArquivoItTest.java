@@ -14,6 +14,7 @@ public class ProcessaArquivoItTest {
   private static File diretorioOut;
 
   public ProcessaArquivoItTest() {
+    // Default constructor
   }
 
   /** Executa antes de cada teste para configurar a entrada e saida.
