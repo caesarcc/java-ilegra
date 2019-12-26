@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 
 public class VendaItem {
 
-  private Long id;
-  private Long quantidade;
-  private BigDecimal precoUnitario;
+  private final Long id;
+  private final Long quantidade;
+  private final BigDecimal precoUnitario;
 
   /** Construtor da entidade básica de item de venda. */
   public VendaItem(Long id, Long quantidade, BigDecimal precoUnitario) {

@@ -19,10 +19,6 @@ public class ProcessaArquivoItTest {
   private static Path arquivo;
   private static Path arquivoOut;
   
-  public ProcessaArquivoItTest() {
-    // Default constructor
-  }
-
   /**
    * Executa antes de cada teste para configurar a entrada e saida.
    */
@@ -46,7 +42,7 @@ public class ProcessaArquivoItTest {
 
   @Test
   public void testeArquivoProcessadoComSucesso() {
-    arquivoOut = ProcessaArquivo.getInstance().processa(arquivo);
+    arquivoOut = ProcessaArquivoSingleton.getInstance().processa(arquivo);
     assertTrue(arquivoOut.toFile().exists());
   }
 
@@ -58,14 +54,14 @@ public class ProcessaArquivoItTest {
     if (diretorioOut.exists()) {
       diretorioOut.delete();
     }    
-    arquivoOut = ProcessaArquivo.getInstance().processa(arquivo);
+    arquivoOut = ProcessaArquivoSingleton.getInstance().processa(arquivo);
     assertTrue(arquivoOut.toFile().exists());
   }
 
   @Test(expected = RuntimeException.class)
   public void testeNaoPodeProcessarArquivoRemovido() {
     new File(arquivo.toString()).delete();
-    ProcessaArquivo.getInstance().processa(arquivo);
+    ProcessaArquivoSingleton.getInstance().processa(arquivo);
   }
 
   /** Executa ao final de cada teste para limpar arquivo gerado. 

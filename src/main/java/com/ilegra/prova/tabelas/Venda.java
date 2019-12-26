@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Venda implements Tabela {
 
-  private Long id;
-  private List<VendaItem> itens;
-  private String nomeVendedor;
+  private final Long id;
+  private final List<VendaItem> itens;
+  private final String nomeVendedor;
 
   /** Construtor da entidade básica da venda. */
   public Venda(Long id, List<VendaItem> itens, String nomeVendedor) {

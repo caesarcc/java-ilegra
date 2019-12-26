@@ -14,15 +14,12 @@ import org.junit.Test;
 
 public class VendaTest {
 
-  public VendaTest() {
-  }
-
   @Test
   public void testeVendaInstanciadaComSucesso() {
     Venda vendaTarget = new Venda(8L, Collections.emptyList(), "Paulo");
 
-    Venda venda = (Venda) TabelaFactory.VENDA
-        .gera(String.format("003ç%sç[1-1-1]ç%s", vendaTarget.getId(), vendaTarget.getNomeVendedor()));
+    Venda venda = (Venda) TabelaFactory.VENDA.gera(
+        String.format("003ç%sç[1-1-1]ç%s", vendaTarget.getId(), vendaTarget.getNomeVendedor()));
 
     assertEquals(vendaTarget.getId(), venda.getId());
     assertEquals(vendaTarget.getNomeVendedor(), venda.getNomeVendedor());

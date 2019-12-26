@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 
 public class Vendedor implements Tabela {
 
-  private String cpf;
-  private String nome;
-  private BigDecimal salario;
+  private final String cpf;
+  private final String nome;
+  private final BigDecimal salario;
 
   /** Construtor da entidade básica de vendedor. */
   public Vendedor(String cpf, String nome, BigDecimal salario) {

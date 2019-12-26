@@ -8,7 +8,7 @@ import java.util.List;
 
 public class GerenciaConteudo {
 
-  private List<Tabela> registros;
+  private final List<Tabela> registros;
 
   public GerenciaConteudo() {
     registros = new ArrayList<Tabela>();

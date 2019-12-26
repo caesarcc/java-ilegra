@@ -26,13 +26,23 @@ public enum TabelaFactory {
     @Override
     public Tabela gera(final String linha) {
       final String[] registro = linha.split("ç");
-      return new Venda(new Long(registro[1]), gereItens(registro[2]), registro[3]);
+      return new Venda(new Long(registro[1]), geraItens(registro[2]), registro[3]);
     }
   };
 
+  private final String codigo;
+
   public abstract Tabela gera(final String linha);
 
-  protected List<VendaItem> gereItens(String grupoItens) {
+  TabelaFactory(final String codigo) {
+    this.codigo = codigo;
+  }
+
+  public String getCodigo() {
+    return this.codigo;
+  }
+
+  protected List<VendaItem> geraItens(String grupoItens) {
     String[] listaItens = grupoItens.replaceAll("[\\[\\]]", "").split(",");
     
     List<String[]> itens = Arrays.stream(listaItens)
@@ -42,16 +52,6 @@ public enum TabelaFactory {
         .map(item -> new VendaItem(Long.valueOf(item[0]), 
             Long.valueOf(item[1]), new BigDecimal(item[2])))
         .collect(Collectors.toList());
-  }
-
-  private final String codigo;
-
-  TabelaFactory(final String codigo) {
-    this.codigo = codigo;
-  }
-
-  public String getCodigo() {
-    return this.codigo;
   }
 
   /** Obtem o enum pelo código do cabeçalho do arquivo. */

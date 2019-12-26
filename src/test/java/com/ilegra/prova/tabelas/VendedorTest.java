@@ -8,9 +8,6 @@ import org.junit.Test;
 
 public class VendedorTest {
 
-  public VendedorTest() {
-  }
-
   @Test
   public void testeVendedorInstanciadoComSucesso() {
     Vendedor vendedorTarget = new Vendedor("3245678865434", "Paulo", BigDecimal.valueOf(40000.99));

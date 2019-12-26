@@ -2,9 +2,9 @@ package com.ilegra.prova.tabelas;
 
 public class Cliente implements Tabela {
 
-  private String cnpj;
-  private String nome;
-  private String areaNegocio;
+  private final String cnpj;
+  private final String nome;
+  private final String areaNegocio;
 
   /** Construtor da entidade básica de cliente. */
   public Cliente(String cnpj, String nome, String areaNegocio) {

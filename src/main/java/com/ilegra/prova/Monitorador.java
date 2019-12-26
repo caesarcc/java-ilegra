@@ -2,7 +2,7 @@ package com.ilegra.prova;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 
-import com.ilegra.prova.servicos.ProcessaArquivo;
+import com.ilegra.prova.servicos.ProcessaArquivoSingleton;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +44,7 @@ public final class Monitorador {
             evento.context().toString());
 
         if (ENTRY_CREATE.equals(tipoEvento)) {
-          ProcessaArquivo.getInstance().processa(arquivo);
+          ProcessaArquivoSingleton.getInstance().processa(arquivo);
         }
       }
       if (!itemMonitorado.reset()) {

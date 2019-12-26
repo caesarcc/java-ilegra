@@ -6,9 +6,6 @@ import org.junit.Test;
 
 public class ClienteTest {
 
-  public ClienteTest() {
-  }
-
   @Test
   public void testeClienteInstanciadoComSucesso() {
     Cliente clienteTarget = new Cliente("2345675434544345","Eduardo Pereira","Rural");

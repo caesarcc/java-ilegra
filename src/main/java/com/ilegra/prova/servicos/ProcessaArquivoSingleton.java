@@ -14,23 +14,31 @@ import java.util.List;
 * @author Caesar C. Cesar
 * @version 1.0
 */
-public class ProcessaArquivo {
+public final class ProcessaArquivoSingleton {
 
-  private static ProcessaArquivo arquivoSingleton = null;
+  private static volatile ProcessaArquivoSingleton arquivoInstance;
+  private static Object intanciaMutuamenteExclusiva = new Object();
   
   private final GerenciaConteudo conteudoGerenciador;
   
-  private ProcessaArquivo() {
+  private ProcessaArquivoSingleton() {
     conteudoGerenciador = new GerenciaConteudo();
   }
 
   /**Obter a instância da classe singleton.
+  * Uso de sincronized double check para garantir thread safety no singleton
   */
-  public static ProcessaArquivo getInstance() { 
-    if (arquivoSingleton == null) {
-      arquivoSingleton = new ProcessaArquivo(); 
+  public static ProcessaArquivoSingleton getInstance() { 
+    ProcessaArquivoSingleton instanceLocal = arquivoInstance;
+    if (instanceLocal == null) {
+      synchronized (intanciaMutuamenteExclusiva) {
+        instanceLocal = arquivoInstance;
+        if (instanceLocal == null) {
+          arquivoInstance = instanceLocal = new ProcessaArquivoSingleton();
+        }
+      }
     }
-    return arquivoSingleton; 
+    return instanceLocal; 
   }
 
   /**

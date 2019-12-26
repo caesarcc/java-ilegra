@@ -8,9 +8,6 @@ import org.junit.Test;
 
 public class TabelaFactoryTest {
     
-  public TabelaFactoryTest() {
-  }
-
   @Test
   public void testeRegistroVendedorIdentificado() {
     TabelaFactory tabelaFactory = TabelaFactory.getTabela("001");
