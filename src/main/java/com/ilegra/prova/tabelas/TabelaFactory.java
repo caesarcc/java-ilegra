@@ -37,7 +37,7 @@ public enum TabelaFactory {
     
     List<String[]> itens = Arrays.stream(listaItens)
         .map(item -> item.split("-")).collect(Collectors.toList());
-    
+  
     return itens.stream()
         .map(item -> new VendaItem(Long.valueOf(item[0]), 
             Long.valueOf(item[1]), new BigDecimal(item[2])))
