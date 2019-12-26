@@ -44,7 +44,7 @@ public final class Monitorador {
             evento.context().toString());
 
         if (ENTRY_CREATE.equals(tipoEvento)) {
-          new Thread(new ProcessaArquivo(caminhoBase, arquivo)).start();
+          ProcessaArquivo.getInstance().processa(arquivo);
         }
       }
       if (!itemMonitorado.reset()) {
