@@ -15,7 +15,6 @@ import org.junit.Test;
 
 public class ProcessaArquivoItTest {
 
-  private static final String NOME_ARQUIVO_TESTE = "teste.txt";
   private static Path arquivo;
   private static Path arquivoOut;
   
@@ -34,7 +33,7 @@ public class ProcessaArquivoItTest {
       arquivoIn.mkdir();
     }
     arquivo = Paths.get(arquivoIn.getPath()
-        .concat(File.separator).concat(NOME_ARQUIVO_TESTE)); 
+        .concat(File.separator).concat("teste.txt")); 
     try (BufferedWriter writer = Files.newBufferedWriter(arquivo)) {
       writer.write("001ç1234567891234çPedroç50000");
     }

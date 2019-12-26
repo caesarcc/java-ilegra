@@ -68,15 +68,14 @@ public final class ProcessaArquivoSingleton {
   }
 
   private Path preparaArquivoSaida(Path arquivo) {
-    final String caminhoBase = arquivo.getParent().getParent().toString();
+    final String caminhoBase = System.getProperty("user.home")
+        .concat(File.separator).concat("data");
     
     final File diretorioSaida = new File(caminhoBase.concat(File.separator).concat("out"));
     if (!diretorioSaida.exists()) {
       diretorioSaida.mkdir();
     }    
     return Paths.get(
-        caminhoBase.concat(File.separator).concat("out")
-        .concat(File.separator)
-        .concat(arquivo.getFileName().toString()));
+        diretorioSaida.toString().concat(File.separator).concat("relatorio.txt"));
   }
 }
