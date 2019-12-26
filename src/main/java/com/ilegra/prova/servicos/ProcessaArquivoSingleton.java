@@ -17,7 +17,6 @@ import java.util.List;
 public final class ProcessaArquivoSingleton {
 
   private static volatile ProcessaArquivoSingleton arquivoInstance;
-  private static Object intanciaMutuamenteExclusiva = new Object();
   
   private final GerenciaConteudo conteudoGerenciador;
   
@@ -26,19 +25,17 @@ public final class ProcessaArquivoSingleton {
   }
 
   /**Obter a instância da classe singleton.
-  * Uso de sincronized double check para garantir thread safety no singleton
+  * Uso de double-check locking para garantir thread safety no singleton
   */
   public static ProcessaArquivoSingleton getInstance() { 
-    ProcessaArquivoSingleton instanceLocal = arquivoInstance;
-    if (instanceLocal == null) {
-      synchronized (intanciaMutuamenteExclusiva) {
-        instanceLocal = arquivoInstance;
-        if (instanceLocal == null) {
-          arquivoInstance = instanceLocal = new ProcessaArquivoSingleton();
+    if (arquivoInstance == null) {
+      synchronized (ProcessaArquivoSingleton.class) {
+        if (arquivoInstance == null) {
+          arquivoInstance = new ProcessaArquivoSingleton();
         }
       }
     }
-    return instanceLocal; 
+    return arquivoInstance; 
   }
 
   /**
