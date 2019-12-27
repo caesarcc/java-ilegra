@@ -1,8 +1,8 @@
 package com.ilegra.prova.servicos;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -52,9 +52,9 @@ public final class ProcessaArquivoSingleton {
 
       List<String> relatorio = conteudoGerenciador.geraRelatorio();
 
-      try (BufferedWriter writer = Files.newBufferedWriter(novoArquivo)) {
+      try (final PrintWriter writer = new PrintWriter(Files.newBufferedWriter(novoArquivo))) {
         for (String linha : relatorio) {
-          writer.write(linha);
+          writer.println(linha);
         }
       }
 
