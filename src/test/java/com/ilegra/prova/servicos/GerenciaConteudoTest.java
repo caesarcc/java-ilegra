@@ -59,4 +59,12 @@ public class GerenciaConteudoTest {
     assertEquals(gerenciaConteudo.getMaiorVenda(), Long.valueOf(13));
   }
 
+  @Test
+  public void testeConferePiorVendedor() {
+    assertEquals(gerenciaConteudo.getPiorVendedor(), "Paulo");
+    gerenciaConteudo.carregaRegistro("003ç13ç[1-1-5.5,2-5-1.1,3-3-2.1]çCaesar");
+    gerenciaConteudo.carregaRegistro("003ç14ç[1-1-1.1,2-1-2.1]çCaesar");
+    assertEquals(gerenciaConteudo.getPiorVendedor(), "Caesar");
+  }
+
 }

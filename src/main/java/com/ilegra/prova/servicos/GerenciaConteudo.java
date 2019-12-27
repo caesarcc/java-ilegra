@@ -9,7 +9,7 @@ import com.ilegra.prova.tabelas.Vendedor;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GerenciaConteudo {
@@ -47,10 +47,14 @@ public class GerenciaConteudo {
    */
   public List<String> geraRelatorio() {
     final List<String> relatorio = new ArrayList<>();
-    relatorio.add(String.format("Quantidade de clientes nos arquivos: %d", this.getQtdeClientes()));
-    relatorio.add(String.format("Quantidade de vendedores nos arquivos: %d", this.getQtdeVendedores()));
-    relatorio.add(String.format("ID da venda mais cara: %d", this.getMaiorVenda()));
-    relatorio.add(String.format("O pior vendedor é: %s", this.getPiorVendedor()));
+    relatorio.add(String.format("Quantidade de clientes nos arquivos: %d", 
+        this.getQtdeClientes()));
+    relatorio.add(String.format("Quantidade de vendedores nos arquivos: %d", 
+        this.getQtdeVendedores()));
+    relatorio.add(String.format("ID da venda mais cara: %d", 
+        this.getMaiorVenda()));
+    relatorio.add(String.format("O pior vendedor é: %s", 
+        this.getPiorVendedor()));
     return relatorio;
   }
 
@@ -64,22 +68,27 @@ public class GerenciaConteudo {
 
   /** Busca ID da maior venda. */
   public Long getMaiorVenda() {
-    final List<Venda> vendas = registros.stream().filter(registro -> registro instanceof Venda)
+    final List<Venda> vendas = registros.stream()
+        .filter(registro -> registro instanceof Venda)
         .map(venda -> (Venda) venda).collect(Collectors.toList());
 
-    Optional<Venda> maiorVenda = vendas.stream()
-        .max(Comparator.comparingDouble(
-        venda -> venda.getValorTotalCalculado().doubleValue()));
-    
-    if (maiorVenda.isPresent()) {
-      return maiorVenda.get().getId();
-    } else {
-      return 0L;
-    }
+    return vendas.stream()
+        .max(Comparator.comparingDouble(venda -> venda.getValorTotalCalculado().doubleValue()))
+        .map(venda -> venda.getId()).orElse(0L);
   }
-  
+
   /** Busca nome do vendedor com menor soma de vendas. */
   public String getPiorVendedor() {
-    return "Paulo";
+    final List<Venda> vendas = registros.stream()
+        .filter(registro -> registro instanceof Venda)
+        .map(venda -> (Venda) venda).collect(Collectors.toList());
+
+    final Map<String, Double> vendasAgrupadas = vendas.stream()
+        .collect(Collectors.groupingBy(Venda::getNomeVendedor,
+        Collectors.summingDouble(venda -> venda.getValorTotalCalculado().doubleValue())));
+
+    return vendasAgrupadas.entrySet().stream()
+        .min(Map.Entry.comparingByValue())
+        .map(chave -> chave.getKey()).orElse("");
   }  
 }
