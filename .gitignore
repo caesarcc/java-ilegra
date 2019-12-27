@@ -3,3 +3,5 @@ target
 /checkstyle
 .vscode
 /.settings
+/*.project
+/*.classpath

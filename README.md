@@ -14,4 +14,8 @@
 [![Code Quality](https://www.code-inspector.com/project/2393/score/svg)](https://www.code-inspector.com/project/2393/score/svg)
 
 **Cobertura de Código:**  
-[![codecov](https://codecov.io/gh/caesarcc/java-ilegra/branch/master/graph/badge.svg)](https://codecov.io/gh/caesarcc/java-ilegra)
+[![codecov](https://codecov.io/gh/caesarcc/java-ilegra/branch/master/graph/badge.svg)](https://codecov.io/gh/caesarcc/java-ilegra)  
+  
+&nbsp;
+  
+***Observação:*** Configurações locais do vscode foram mantidas no git para auxiliar no ajuste do plugin Java CheckStyle.  
