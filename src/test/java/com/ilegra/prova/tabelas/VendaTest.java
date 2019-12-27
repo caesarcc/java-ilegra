@@ -28,6 +28,21 @@ public class VendaTest {
   }
 
   @Test
+  public void testeVendaValorCalculadoDoItemCorreto() {
+    Venda venda = (Venda) TabelaFactory.VENDA.gera("003ç10ç[1-13-3.75]çCaesar");
+    assertEquals(BigDecimal.valueOf(13 * 3.75).doubleValue(), 
+        venda.getItens().get(0).getPrecoCalculado().doubleValue(), 0.01);
+  }  
+
+  @Test
+  public void testeVendaValorTotalCalculadoCorreto() {
+    Venda venda = (Venda) TabelaFactory.VENDA.gera(
+        "003ç10ç[1-10-100,2-30-2.50,3-40-3.10]çCaesar");
+    assertEquals(new BigDecimal((10 * 100) + (30 * 2.5) + (40 * 3.1)).floatValue(), 
+        venda.getValorTotalCalculado().doubleValue(), 0.01);
+  }  
+  
+  @Test
   public void testeVendaComItensInstanciadaComSucesso() {
     List<VendaItem> listItens = new ArrayList<>();
     listItens.add(new VendaItem(1L, 10L, new BigDecimal("100")));
@@ -54,18 +69,4 @@ public class VendaTest {
       }
     });
   }
-  
-  @Test
-  public void testeVendaValorCalculadoDoItemCorreto() {
-    List<VendaItem> listItens = new ArrayList<>();
-    listItens.add(new VendaItem(1L, 13L, BigDecimal.valueOf(3.75)));
-    BigDecimal valorTarget = listItens.get(0).getPrecoCalculado();
-    Venda vendaTarget = new Venda(1L, listItens, "Pedro");
-    
-    Venda venda = (Venda) TabelaFactory.VENDA.gera(
-        String.format("003ç%sç[1-13-3.75]ç%s", 
-        vendaTarget.getId(), vendaTarget.getNomeVendedor()));
-        
-    assertEquals(valorTarget, venda.getItens().get(0).getPrecoCalculado());
-  }  
 }

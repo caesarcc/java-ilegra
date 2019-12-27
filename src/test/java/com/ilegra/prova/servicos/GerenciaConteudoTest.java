@@ -1,14 +1,7 @@
 package com.ilegra.prova.servicos;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +50,13 @@ public class GerenciaConteudoTest {
     gerenciaConteudo.carregaRegistro("001ç96261846049çJoaoç30000");
     gerenciaConteudo.carregaRegistro("001ç96261846049çMariaç80000");
     assertEquals(gerenciaConteudo.getQtdeVendedores(), Long.valueOf(4));
+  }
+
+  @Test
+  public void testeConfereMaiorVenda() {
+    assertEquals(gerenciaConteudo.getMaiorVenda(), Long.valueOf(10));
+    gerenciaConteudo.carregaRegistro("003ç13ç[1-15-85.9,2-35-2.90,3-41-3.55]çCaesar");
+    assertEquals(gerenciaConteudo.getMaiorVenda(), Long.valueOf(13));
   }
 
 }

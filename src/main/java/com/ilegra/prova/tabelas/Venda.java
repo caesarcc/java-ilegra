@@ -1,5 +1,6 @@
 package com.ilegra.prova.tabelas;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,6 +27,13 @@ public class Venda implements Tabela {
 
   public List<VendaItem> getItens() {
     return Collections.unmodifiableList(itens);
+  }
+
+  /** Valor total da venda. */
+  public BigDecimal getValorTotalCalculado() {
+    return itens.stream()
+        .map((item) -> item.getPrecoCalculado())
+        .reduce((itemA, itemB) -> itemA.add(itemB)).get();
   }
   
 }
